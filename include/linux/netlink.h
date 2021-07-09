@@ -1,8 +1,14 @@
 #ifndef __LINUX_NETLINK_H
 #define __LINUX_NETLINK_H
 
-#include <linux/socket.h> /* for __kernel_sa_family_t */
-#include <linux/types.h>
+//CHANGED: changed from linux to sys
+//#include <linux/socket.h> /* for __kernel_sa_family_t */
+//#include <linux/types.h>
+#include <sys/socket.h> 
+#include <sys/types.h>
+//HACK: Added this
+#define AF_NETLINK 	38
+#define PF_NETLINK 	38
 
 #define NETLINK_ROUTE		0	/* Routing/device hook				*/
 #define NETLINK_UNUSED		1	/* Unused number				*/
@@ -31,12 +37,25 @@
 
 #define MAX_LINKS 32		
 
+//CHANGED: diff sockaddr_nl implementation
+//struct sockaddr_nl {
+//	__kernel_sa_family_t	nl_family;	/* AF_NETLINK	*/
+//	unsigned short	nl_pad;		/* zero		*/
+//	__u32		nl_pid;		/* port ID	*/
+//       	__u32		nl_groups;	/* multicast groups mask */
+//};
 struct sockaddr_nl {
-	__kernel_sa_family_t	nl_family;	/* AF_NETLINK	*/
-	unsigned short	nl_pad;		/* zero		*/
-	__u32		nl_pid;		/* port ID	*/
-       	__u32		nl_groups;	/* multicast groups mask */
+	uint8_t		nl_len;		/* FreeBSD SPECIFIC */
+	sa_family_t	nl_family;	/* AF_NETLINK */
+	uint16_t	nl_pad;		/* zero */
+	uint32_t	nl_pid;		/* port ID */
+	uint32_t	nl_groups;	/* multicast groups mask */
 };
+
+#define __u8 uint8_t
+#define __u16 uint16_t
+#define __u32 uint32_t
+#define __u64 uint64_t
 
 struct nlmsghdr {
 	__u32		nlmsg_len;	/* Length of message including header */
