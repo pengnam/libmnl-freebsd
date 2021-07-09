@@ -16,10 +16,6 @@ AC_EXEEXT
 AC_DISABLE_STATIC
 LT_INIT
 CHECK_GCC_FVISIBILITY
-case "$host" in
-*-*-linux* | *-*-uclinux*) ;;
-*) AC_MSG_ERROR([Linux only, dude!]);;
-esac
 
 regular_CPPFLAGS="-D_FILE_OFFSET_BITS=64 -D_REENTRANT"
 regular_CFLAGS="-Wall -Waggregate-return -Wmissing-declarations \
