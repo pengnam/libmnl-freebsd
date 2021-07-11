@@ -206,12 +206,12 @@ int mnl_socket_bind(struct mnl_socket *nl, unsigned int groups, pid_t pid)
 	nl->addr.nl_pid = pid;
 
 	ret = bind(nl->fd, (struct sockaddr *) &nl->addr, sizeof (nl->addr));
-	if (ret < 0)
+	if (ret)
 		return ret;
 
 	addr_len = sizeof(nl->addr);
 	ret = getsockname(nl->fd, (struct sockaddr *) &nl->addr, &addr_len);
-	if (ret < 0)	
+	if (ret)
 		return ret;
 
 	if (addr_len != sizeof(nl->addr)) {

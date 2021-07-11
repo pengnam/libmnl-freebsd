@@ -43,21 +43,32 @@ int main(int argc, char *argv[])
 		perror("mnl_socket_open");
 		exit(EXIT_FAILURE);
 	}
+	printf("opened\n");
+	fflush(stdout);
 
 	if (mnl_socket_bind(nl, 0, MNL_SOCKET_AUTOPID) < 0) {
 		perror("mnl_socket_bind");
 		exit(EXIT_FAILURE);
 	}
 	portid = mnl_socket_get_portid(nl);
+	printf("binded\n");
+	fflush(stdout);
 
 	if (mnl_socket_sendto(nl, nlh, nlh->nlmsg_len) < 0) {
 		perror("mnl_socket_sendto");
 		exit(EXIT_FAILURE);
 	}
+	printf("sended\n");
+	fflush(stdout);
+	bzero(buf, MNL_SOCKET_BUFFER_SIZE);
 
 	ret = mnl_socket_recvfrom(nl, buf, sizeof(buf));
 	while (ret > 0) {
-		//ret = mnl_cb_run(buf, ret, seq, portid, data_cb, NULL);
+		printf("inside: %d\n", ret);
+		fflush(stdout);
+		mnl_nlmsg_fprintf(stdout, buf, ret, 0);
+		printf("inside2: %d\n", ret);
+		fflush(stdout);
 		if (ret <= 0)
 			break;
 		ret = mnl_socket_recvfrom(nl, buf, sizeof(buf));
@@ -66,6 +77,8 @@ int main(int argc, char *argv[])
 		perror("error");
 		exit(EXIT_FAILURE);
 	}
+	printf("received");
+	fflush(stdout);
 
 	mnl_socket_close(nl);
 
