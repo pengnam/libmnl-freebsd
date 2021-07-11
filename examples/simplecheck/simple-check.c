@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <time.h>
+#include <strings.h>
 
 #include <libmnl/libmnl.h>
 #include <linux/genetlink.h>
@@ -53,6 +54,8 @@ int main(int argc, char *argv[])
 	portid = mnl_socket_get_portid(nl);
 	printf("binded\n");
 	fflush(stdout);
+	printf("SENDING\n");
+	mnl_nlmsg_fprintf(stdout, buf, sizeof(struct nlmsghdr), 0);
 
 	if (mnl_socket_sendto(nl, nlh, nlh->nlmsg_len) < 0) {
 		perror("mnl_socket_sendto");
@@ -64,11 +67,17 @@ int main(int argc, char *argv[])
 
 	ret = mnl_socket_recvfrom(nl, buf, sizeof(buf));
 	while (ret > 0) {
-		printf("inside: %d\n", ret);
-		fflush(stdout);
+		printf("RECEIVED\n");
 		mnl_nlmsg_fprintf(stdout, buf, ret, 0);
-		printf("inside2: %d\n", ret);
-		fflush(stdout);
+		if (ret < sizeof(struct nlmsghdr)) {
+			printf("too small\n");
+			exit(EXIT_FAILURE);
+		}
+		printf("WITHIN\n");
+		struct nlmsgerr* content = buf + sizeof(struct nlmsghdr);
+		printf("ERROR RETURNED: %d\n", content->error);
+
+		mnl_nlmsg_fprintf(stdout, (void*) &(content->msg) , ret, 0);
 		if (ret <= 0)
 			break;
 		ret = mnl_socket_recvfrom(nl, buf, sizeof(buf));
