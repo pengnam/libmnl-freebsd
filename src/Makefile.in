@@ -344,7 +344,7 @@ top_srcdir = @top_srcdir@
 # </snippet>
 #
 LIBVERSION = 2:0:2
-AM_CPPFLAGS = ${regular_CPPFLAGS} -I${top_srcdir}/include
+AM_CPPFLAGS = ${regular_CPPFLAGS} -I${top_srcdir}/include -I/usr/include/netlink2
 AM_CFLAGS = ${regular_CFLAGS} ${GCC_FVISIBILITY_HIDDEN}
 lib_LTLIBRARIES = libmnl.la
 libmnl_la_LDFLAGS = -Wl,--version-script=$(srcdir)/libmnl.map -version-info $(LIBVERSION)

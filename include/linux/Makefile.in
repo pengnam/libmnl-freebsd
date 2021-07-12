@@ -303,7 +303,7 @@ top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 SUBDIRS = netfilter
-noinst_HEADERS = netlink.h socket.h
+noinst_HEADERS = socket.h 
 all: all-recursive
 
 .SUFFIXES:

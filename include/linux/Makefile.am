@@ -1,2 +1,2 @@
 SUBDIRS = netfilter
-noinst_HEADERS = netlink.h socket.h
+noinst_HEADERS = socket.h 
