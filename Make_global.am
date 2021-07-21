@@ -20,5 +20,5 @@
 #
 LIBVERSION=2:0:2
 
-AM_CPPFLAGS = ${regular_CPPFLAGS} -I${top_srcdir}/include -I/usr/include/netlink2
+AM_CPPFLAGS = ${regular_CPPFLAGS} -I${top_srcdir}/include -I/usr/include/netlink
 AM_CFLAGS = ${regular_CFLAGS} ${GCC_FVISIBILITY_HIDDEN}
