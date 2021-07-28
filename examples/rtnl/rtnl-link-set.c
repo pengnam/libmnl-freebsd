@@ -6,8 +6,8 @@
 #include <time.h>
 
 #include <libmnl/libmnl.h>
-#include <linux/if.h>
-#include <linux/if_link.h>
+#include <net/if.h>
+//#include <linux/if_link.h>
 #include <linux/rtnetlink.h>
 
 int main(int argc, char *argv[])

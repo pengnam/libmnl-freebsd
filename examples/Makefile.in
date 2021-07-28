@@ -301,7 +301,7 @@ top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 
 #SUBDIRS = genl kobject netfilter rtnl
-SUBDIRS = simplecheck
+SUBDIRS = simplecheck rtnl
 all: all-recursive
 
 .SUFFIXES:

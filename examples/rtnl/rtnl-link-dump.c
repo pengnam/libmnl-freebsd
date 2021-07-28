@@ -6,8 +6,8 @@
 #include <arpa/inet.h>
 
 #include <libmnl/libmnl.h>
-#include <linux/if.h>
-#include <linux/if_link.h>
+#include <net/if.h>
+//#include <linux/if_link.h>
 #include <linux/rtnetlink.h>
 
 static int data_attr_cb(const struct nlattr *attr, void *data)
@@ -93,7 +93,7 @@ int main(void)
 	nlh->nlmsg_flags = NLM_F_REQUEST | NLM_F_DUMP;
 	nlh->nlmsg_seq = seq = time(NULL);
 	rt = mnl_nlmsg_put_extra_header(nlh, sizeof(struct rtgenmsg));
-	rt->rtgen_family = AF_PACKET;
+	rt->rtgen_family = AF_NETLINK;
 
 	nl = mnl_socket_open(NETLINK_ROUTE);
 	if (nl == NULL) {

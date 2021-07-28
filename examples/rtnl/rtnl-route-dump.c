@@ -7,8 +7,8 @@
 #include <arpa/inet.h>
 
 #include <libmnl/libmnl.h>
-#include <linux/if.h>
-#include <linux/if_link.h>
+#include <net/if.h>
+//#include <linux/if_link.h>
 #include <linux/rtnetlink.h>
 
 static int data_attr_cb2(const struct nlattr *attr, void *data)
