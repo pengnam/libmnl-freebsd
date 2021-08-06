@@ -91,7 +91,7 @@ check_PROGRAMS = rtnl-addr-dump$(EXEEXT) rtnl-link-dump$(EXEEXT) \
 	rtnl-link-dump2$(EXEEXT) rtnl-link-dump3$(EXEEXT) \
 	rtnl-link-event$(EXEEXT) rtnl-link-set$(EXEEXT) \
 	rtnl-route-add$(EXEEXT) rtnl-route-dump$(EXEEXT) \
-	rtnl-route-event$(EXEEXT)
+	rtnl-route-event$(EXEEXT) rtnl-route-delete$(EXEEXT)
 subdir = examples/rtnl
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/m4/gcc4_visibility.m4 \
@@ -130,6 +130,9 @@ rtnl_link_set_DEPENDENCIES = ../../src/libmnl.la
 am_rtnl_route_add_OBJECTS = rtnl-route-add.$(OBJEXT)
 rtnl_route_add_OBJECTS = $(am_rtnl_route_add_OBJECTS)
 rtnl_route_add_DEPENDENCIES = ../../src/libmnl.la
+am_rtnl_route_delete_OBJECTS = rtnl-route-delete.$(OBJEXT)
+rtnl_route_delete_OBJECTS = $(am_rtnl_route_delete_OBJECTS)
+rtnl_route_delete_DEPENDENCIES = ../../src/libmnl.la
 am_rtnl_route_dump_OBJECTS = rtnl-route-dump.$(OBJEXT)
 rtnl_route_dump_OBJECTS = $(am_rtnl_route_dump_OBJECTS)
 rtnl_route_dump_DEPENDENCIES = ../../src/libmnl.la
@@ -155,6 +158,7 @@ am__depfiles_remade = ./$(DEPDIR)/rtnl-addr-dump.Po \
 	./$(DEPDIR)/rtnl-link-dump.Po ./$(DEPDIR)/rtnl-link-dump2.Po \
 	./$(DEPDIR)/rtnl-link-dump3.Po ./$(DEPDIR)/rtnl-link-event.Po \
 	./$(DEPDIR)/rtnl-link-set.Po ./$(DEPDIR)/rtnl-route-add.Po \
+	./$(DEPDIR)/rtnl-route-delete.Po \
 	./$(DEPDIR)/rtnl-route-dump.Po ./$(DEPDIR)/rtnl-route-event.Po
 am__mv = mv -f
 COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
@@ -178,13 +182,13 @@ am__v_CCLD_1 =
 SOURCES = $(rtnl_addr_dump_SOURCES) $(rtnl_link_dump_SOURCES) \
 	$(rtnl_link_dump2_SOURCES) $(rtnl_link_dump3_SOURCES) \
 	$(rtnl_link_event_SOURCES) $(rtnl_link_set_SOURCES) \
-	$(rtnl_route_add_SOURCES) $(rtnl_route_dump_SOURCES) \
-	$(rtnl_route_event_SOURCES)
+	$(rtnl_route_add_SOURCES) $(rtnl_route_delete_SOURCES) \
+	$(rtnl_route_dump_SOURCES) $(rtnl_route_event_SOURCES)
 DIST_SOURCES = $(rtnl_addr_dump_SOURCES) $(rtnl_link_dump_SOURCES) \
 	$(rtnl_link_dump2_SOURCES) $(rtnl_link_dump3_SOURCES) \
 	$(rtnl_link_event_SOURCES) $(rtnl_link_set_SOURCES) \
-	$(rtnl_route_add_SOURCES) $(rtnl_route_dump_SOURCES) \
-	$(rtnl_route_event_SOURCES)
+	$(rtnl_route_add_SOURCES) $(rtnl_route_delete_SOURCES) \
+	$(rtnl_route_dump_SOURCES) $(rtnl_route_event_SOURCES)
 am__can_run_installinfo = \
   case $$AM_UPDATE_INFO_DIR in \
     n|no|NO) false;; \
@@ -371,6 +375,8 @@ rtnl_route_dump_SOURCES = rtnl-route-dump.c
 rtnl_route_dump_LDADD = ../../src/libmnl.la
 rtnl_route_event_SOURCES = rtnl-route-event.c
 rtnl_route_event_LDADD = ../../src/libmnl.la
+rtnl_route_delete_SOURCES = rtnl-route-delete.c
+rtnl_route_delete_LDADD = ../../src/libmnl.la
 all: all-am
 
 .SUFFIXES:
@@ -443,6 +449,10 @@ rtnl-route-add$(EXEEXT): $(rtnl_route_add_OBJECTS) $(rtnl_route_add_DEPENDENCIES
 	@rm -f rtnl-route-add$(EXEEXT)
 	$(AM_V_CCLD)$(LINK) $(rtnl_route_add_OBJECTS) $(rtnl_route_add_LDADD) $(LIBS)
 
+rtnl-route-delete$(EXEEXT): $(rtnl_route_delete_OBJECTS) $(rtnl_route_delete_DEPENDENCIES) $(EXTRA_rtnl_route_delete_DEPENDENCIES) 
+	@rm -f rtnl-route-delete$(EXEEXT)
+	$(AM_V_CCLD)$(LINK) $(rtnl_route_delete_OBJECTS) $(rtnl_route_delete_LDADD) $(LIBS)
+
 rtnl-route-dump$(EXEEXT): $(rtnl_route_dump_OBJECTS) $(rtnl_route_dump_DEPENDENCIES) $(EXTRA_rtnl_route_dump_DEPENDENCIES) 
 	@rm -f rtnl-route-dump$(EXEEXT)
 	$(AM_V_CCLD)$(LINK) $(rtnl_route_dump_OBJECTS) $(rtnl_route_dump_LDADD) $(LIBS)
@@ -464,6 +474,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/rtnl-link-event.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/rtnl-link-set.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/rtnl-route-add.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/rtnl-route-delete.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/rtnl-route-dump.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/rtnl-route-event.Po@am__quote@ # am--include-marker
 
@@ -636,6 +647,7 @@ distclean: distclean-am
 	-rm -f ./$(DEPDIR)/rtnl-link-event.Po
 	-rm -f ./$(DEPDIR)/rtnl-link-set.Po
 	-rm -f ./$(DEPDIR)/rtnl-route-add.Po
+	-rm -f ./$(DEPDIR)/rtnl-route-delete.Po
 	-rm -f ./$(DEPDIR)/rtnl-route-dump.Po
 	-rm -f ./$(DEPDIR)/rtnl-route-event.Po
 	-rm -f Makefile
@@ -690,6 +702,7 @@ maintainer-clean: maintainer-clean-am
 	-rm -f ./$(DEPDIR)/rtnl-link-event.Po
 	-rm -f ./$(DEPDIR)/rtnl-link-set.Po
 	-rm -f ./$(DEPDIR)/rtnl-route-add.Po
+	-rm -f ./$(DEPDIR)/rtnl-route-delete.Po
 	-rm -f ./$(DEPDIR)/rtnl-route-dump.Po
 	-rm -f ./$(DEPDIR)/rtnl-route-event.Po
 	-rm -f Makefile
