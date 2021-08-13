@@ -7,7 +7,8 @@ check_PROGRAMS = rtnl-addr-dump \
 		 rtnl-route-add \
 		 rtnl-route-dump \
 		 rtnl-route-event \
-		 rtnl-route-delete
+		 rtnl-route-delete \
+		 rtnl-route-get
 
 rtnl_addr_dump_SOURCES = rtnl-addr-dump.c
 rtnl_addr_dump_LDADD = ../../src/libmnl.la
@@ -38,3 +39,6 @@ rtnl_route_event_LDADD = ../../src/libmnl.la
 
 rtnl_route_delete_SOURCES = rtnl-route-delete.c
 rtnl_route_delete_LDADD = ../../src/libmnl.la
+
+rtnl_route_get_SOURCES = rtnl-route-get.c
+rtnl_route_get_LDADD = ../../src/libmnl.la
